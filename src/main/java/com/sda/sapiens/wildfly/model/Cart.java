@@ -1,9 +1,7 @@
 package com.sda.sapiens.wildfly.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -20,11 +18,13 @@ public class Cart {
     private Long id;
 
     @CreationTimestamp
-    private LocalDateTime created;
+    private LocalDateTime created; // now()
 
     @UpdateTimestamp
     private LocalDateTime lastUpdated;
 
     @OneToMany(mappedBy = "cart")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private List<CartEntry> entries;
 }

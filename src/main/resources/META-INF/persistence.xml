@@ -6,10 +6,17 @@
     <persistence-unit name="SapiensPersistence">
 <!--        Nazwa po której kontener próbuje odszukać konfigurację po stronie widlfy -->
         <jta-data-source>java:/SapiensPersistence</jta-data-source>
+
+<!--        Dopisujemy klasy obsługiwane przez persistence/hibernate-->
+        <class>com.sda.sapiens.wildfly.model.Cart</class>
+        <class>com.sda.sapiens.wildfly.model.Product</class>
+        <class>com.sda.sapiens.wildfly.model.CartEntry</class>
+
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
 
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
+            <property name="jakarta.persistence.schema-generation.database.action" value="create"/>
         </properties>
     </persistence-unit>
 </persistence>
