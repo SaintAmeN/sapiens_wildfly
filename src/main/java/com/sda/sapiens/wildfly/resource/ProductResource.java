@@ -1,5 +1,6 @@
 package com.sda.sapiens.wildfly.resource;
 
+import com.sda.sapiens.wildfly.exception.ProductAlreadyExistsException;
 import com.sda.sapiens.wildfly.model.dto.ProductDto;
 import com.sda.sapiens.wildfly.service.ProductService;
 import jakarta.ejb.Stateless;
@@ -52,7 +53,7 @@ public class ProductResource {
     @Path("")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)   // mówi że ta metoda AKCEPTUJE format JSON
-    public Response addProduct(ProductDto newProductInformation) {
+    public Response addProduct(ProductDto newProductInformation) throws ProductAlreadyExistsException {
         log.info("Request to add new product to offer: " + newProductInformation);
 
         // dodawanie produktu - jeśli istnieje produkt o takiej nazwie, to nie możemy dodać drugiego i spodziewamy sie bu-bu
