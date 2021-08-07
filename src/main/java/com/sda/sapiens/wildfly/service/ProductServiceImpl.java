@@ -33,4 +33,15 @@ public class ProductServiceImpl implements ProductService {
     public ProductDto findByName(String name) {
         return null;
     }
+
+    @Override
+    public List<ProductDto> findProductsByName(String searchedPhrase) {
+        return productRepository.findProductsByName(searchedPhrase)
+                .stream()
+                .map(product -> new ProductDto(
+                        product.getName(),
+                        product.getPrice(),
+                        product.getPrice() * 1.08))
+                .collect(Collectors.toList());
+    }
 }

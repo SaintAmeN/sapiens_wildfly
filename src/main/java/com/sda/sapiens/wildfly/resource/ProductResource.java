@@ -5,6 +5,7 @@ import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -31,5 +32,23 @@ public class ProductResource {
                 .entity(productService.findAll())
                 .build();
     }
+
+    // patrząc na to "co może zrobić użytkownik" piszemy kolejne metody:
+    // - szukanie produktu po nazwie
+    // - dodawanie produktów
+
+    @GET
+    @Path("/{phrase}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response findByName(@PathParam(value = "phrase") String searchedPhrase) {
+        log.info("Request to get products by searched phrase: " + searchedPhrase);
+
+        // szukanie po frazie - użytkownik podaje słowo, jeśli słowo występuje w nazwie
+        return Response
+                .status(Response.Status.OK)
+                .entity(productService.findProductsByName(searchedPhrase))
+                .build();
+    }
+
 
 }
