@@ -3,9 +3,9 @@ package com.sda.sapiens.wildfly.repository;
 import com.sda.sapiens.wildfly.model.Product;
 import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,5 +33,27 @@ public class ProductRepositoryImpl implements ProductRepository {
                 .createQuery("SELECT p FROM Product p WHERE p.name LIKE CONCAT('%',:phrase,'%')", Product.class)
                 .setParameter("phrase", searchedPhrase)
                 .getResultList();
+    }
+
+    @Override
+    public void save(Product product) {
+        entityManager.persist(product);
+    }
+
+    @Override
+    public Optional<Product> findByName(String name) {
+        try {
+            Product product = entityManager
+                    .createQuery("SELECT p FROM Product p WHERE p.name = :phrase", Product.class)
+                    .setParameter("phrase", name)
+                    .getSingleResult();
+
+            // jeśli wszystko jest ok, wykonamy instrukcję zwróć
+            return Optional.ofNullable(product);
+        }catch (NoResultException nre){
+
+            // zwracam brak wyników jeśli otrzymam exception
+            return Optional.empty();
+        }
     }
 }

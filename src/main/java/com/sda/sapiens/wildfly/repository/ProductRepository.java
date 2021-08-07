@@ -10,4 +10,8 @@ public interface ProductRepository {
     Optional<Product> findById(Long id);
 
     List<Product> findProductsByName(String searchedPhrase);
+
+    void save(Product product);
+
+    Optional<Product> findByName(String name);
 }

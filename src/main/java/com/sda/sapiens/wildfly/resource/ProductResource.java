@@ -1,12 +1,10 @@
 package com.sda.sapiens.wildfly.resource;
 
+import com.sda.sapiens.wildfly.model.dto.ProductDto;
 import com.sda.sapiens.wildfly.service.ProductService;
 import jakarta.ejb.Stateless;
 import jakarta.inject.Inject;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
-import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import lombok.extern.java.Log;
@@ -50,5 +48,18 @@ public class ProductResource {
                 .build();
     }
 
+    @POST
+    @Path("")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)   // mówi że ta metoda AKCEPTUJE format JSON
+    public Response addProduct(ProductDto newProductInformation) {
+        log.info("Request to add new product to offer: " + newProductInformation);
+
+        // dodawanie produktu - jeśli istnieje produkt o takiej nazwie, to nie możemy dodać drugiego i spodziewamy sie bu-bu
+        return Response
+                .status(Response.Status.OK)
+                .entity(productService.addProduct(newProductInformation))
+                .build();
+    }
 
 }

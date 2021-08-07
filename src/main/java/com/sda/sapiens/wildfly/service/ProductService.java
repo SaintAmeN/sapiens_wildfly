@@ -9,4 +9,6 @@ public interface ProductService {
     ProductDto findByName(String name);
 
     List<ProductDto> findProductsByName(String searchedPhrase);
+
+    ProductDto addProduct(ProductDto newProductInformation);
 }
