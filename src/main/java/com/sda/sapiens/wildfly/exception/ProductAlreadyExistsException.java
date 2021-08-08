@@ -1,6 +1,8 @@
 package com.sda.sapiens.wildfly.exception;
 
-public class ProductAlreadyExistsException extends RuntimeException{
+import jakarta.ejb.EJBException;
+
+public class ProductAlreadyExistsException extends EJBException {
     public ProductAlreadyExistsException(String message) {
         super(message);
     }
